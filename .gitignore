@@ -5,3 +5,8 @@ Build/
 __pycache__/
 tags/
 .vscode/
+.cache/
+compile_commands.json
+
+ovmf.disk
+ovmf-boot.log
