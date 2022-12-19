@@ -10,3 +10,4 @@ compile_commands.json
 
 ovmf.disk
 ovmf-boot.log
+.gdbinit
