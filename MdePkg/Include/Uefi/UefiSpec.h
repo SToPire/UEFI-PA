@@ -1871,7 +1871,7 @@ typedef struct {
   EFI_QUERY_VARIABLE_INFO           QueryVariableInfo;
 
   // Custom Runtime Service in UEFI PA
-  EFI_CUSTOM_RT_SERVICE             CustomRtService;
+  EFI_CUSTOM_RT_SERVICE             CustomRTService;
 } EFI_RUNTIME_SERVICES;
 
 #define EFI_BOOT_SERVICES_SIGNATURE  SIGNATURE_64 ('B','O','O','T','S','E','R','V')

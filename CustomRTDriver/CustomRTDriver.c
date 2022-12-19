@@ -22,7 +22,7 @@ InitializeCustimRTDriver (
   EFI_STATUS  Status = EFI_SUCCESS;
   DEBUG ((DEBUG_INFO, "My Init\n"));
 
-  gRT->CustomRtService = CustomRTServiceEntry;
+  gRT->CustomRTService = CustomRTServiceEntry;
 
   return Status;
 }
