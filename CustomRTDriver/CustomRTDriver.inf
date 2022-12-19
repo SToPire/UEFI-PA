@@ -1,0 +1,26 @@
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CustomRTDriver
+  FILE_GUID                      = 7d571082-7ec1-11ed-a3da-cdb82a4730d0
+  MODULE_TYPE                    = DXE_RUNTIME_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = InitializeCustimRTDriver
+
+[Sources]
+  CustomRTDriver.c
+  CustomRTDriver.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiRuntimeServicesTableLib
+  UefiRuntimeLib
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+  UefiLib
+  DebugLib
+  BaseLib
+
+[Depex]
+  TRUE  

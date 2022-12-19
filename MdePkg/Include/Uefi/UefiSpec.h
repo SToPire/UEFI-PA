@@ -1774,6 +1774,22 @@ EFI_STATUS
   OUT UINT64            *MaximumVariableSize
   );
 
+/* Custom Runtime Service in UEFI PA */
+typedef struct {
+  UINT16 DUMMY1;
+} EFI_CUSTOM_RT_INPUT;
+
+typedef struct {
+  UINT16 DUMMY1;
+} EFI_CUSTOM_RT_OUTPUT;
+
+typedef
+EFI_STATUS
+(EFIAPI *EFI_CUSTOM_RT_SERVICE)(
+  IN  EFI_CUSTOM_RT_INPUT  EfiCustomRTIn,
+  OUT EFI_CUSTOM_RT_OUTPUT *EfiCustomRTOut
+  );
+
 //
 // Firmware should stop at a firmware user interface on next boot
 //
@@ -1853,6 +1869,9 @@ typedef struct {
   // Miscellaneous UEFI 2.0 Service
   //
   EFI_QUERY_VARIABLE_INFO           QueryVariableInfo;
+
+  // Custom Runtime Service in UEFI PA
+  EFI_CUSTOM_RT_SERVICE             CustomRtService;
 } EFI_RUNTIME_SERVICES;
 
 #define EFI_BOOT_SERVICES_SIGNATURE  SIGNATURE_64 ('B','O','O','T','S','E','R','V')
