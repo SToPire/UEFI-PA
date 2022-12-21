@@ -1786,7 +1786,7 @@ typedef struct {
 typedef
 EFI_STATUS
 (EFIAPI *EFI_CUSTOM_RT_SERVICE)(
-  IN  EFI_CUSTOM_RT_INPUT  EfiCustomRTIn,
+  IN  EFI_CUSTOM_RT_INPUT  *EfiCustomRTIn,
   OUT EFI_CUSTOM_RT_OUTPUT *EfiCustomRTOut
   );
 

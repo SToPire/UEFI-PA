@@ -1,0 +1,87 @@
+From 941f75f85455eca13378687e0a20057c5bae44ae Mon Sep 17 00:00:00 2001
+From: Yifan Zhao <stopire@gmail.com>
+Date: Wed, 21 Dec 2022 15:25:55 +0800
+Subject: [PATCH] custom uefi runtime service support
+
+---
+ drivers/firmware/efi/runtime-wrappers.c | 15 +++++++++++++++
+ include/linux/efi.h                     |  4 ++++
+ 2 files changed, 19 insertions(+)
+
+diff --git a/drivers/firmware/efi/runtime-wrappers.c b/drivers/firmware/efi/runtime-wrappers.c
+index f3e54f6616f0..52a49f1bcd90 100644
+--- a/drivers/firmware/efi/runtime-wrappers.c
++++ b/drivers/firmware/efi/runtime-wrappers.c
+@@ -236,6 +236,9 @@ static void efi_call_rts(struct work_struct *work)
+ 				       *(unsigned long *)arg2, (u64 *)arg3,
+ 				       (int *)arg4);
+ 		break;
++	case EFI_CUSTOM_RT_SERVICE:
++		status = efi_call_virt(custom_rt_service, (void *)arg1, (void *)arg2);
++		break;
+ 	default:
+ 		/*
+ 		 * Ideally, we should never reach here because a caller of this
+@@ -459,6 +462,17 @@ static efi_status_t virt_efi_query_capsule_caps(efi_capsule_header_t **capsules,
+ 	return status;
+ }
+ 
++static efi_status_t virt_efi_custom_rt_service(void *in, void *out)
++{
++	efi_status_t status;
++
++	if (down_interruptible(&efi_runtime_lock))
++		return EFI_ABORTED;
++	status = efi_queue_work(EFI_CUSTOM_RT_SERVICE, in, out, NULL, NULL, NULL);
++	up(&efi_runtime_lock);
++	return status;
++}
++
+ void efi_native_runtime_setup(void)
+ {
+ 	efi.get_time = virt_efi_get_time;
+@@ -475,4 +489,5 @@ void efi_native_runtime_setup(void)
+ 	efi.query_variable_info_nonblocking = virt_efi_query_variable_info_nonblocking;
+ 	efi.update_capsule = virt_efi_update_capsule;
+ 	efi.query_capsule_caps = virt_efi_query_capsule_caps;
++	efi.custom_rt_service = virt_efi_custom_rt_service;
+ }
+diff --git a/include/linux/efi.h b/include/linux/efi.h
+index 6b5d36babfcc..65b6c0a0cbb9 100644
+--- a/include/linux/efi.h
++++ b/include/linux/efi.h
+@@ -262,6 +262,7 @@ typedef efi_status_t efi_query_capsule_caps_t(efi_capsule_header_t **capsules,
+ typedef efi_status_t efi_query_variable_store_t(u32 attributes,
+ 						unsigned long size,
+ 						bool nonblocking);
++typedef efi_status_t efi_custom_rt_service_t(void *in, void *out);
+ 
+ typedef union {
+ 	struct {
+@@ -280,6 +281,7 @@ typedef union {
+ 		efi_update_capsule_t __efiapi		*update_capsule;
+ 		efi_query_capsule_caps_t __efiapi	*query_capsule_caps;
+ 		efi_query_variable_info_t __efiapi	*query_variable_info;
++		efi_custom_rt_service_t __efiapi *custom_rt_service;
+ 	};
+ 	efi_runtime_services_32_t mixed_mode;
+ } efi_runtime_services_t;
+@@ -564,6 +566,7 @@ extern struct efi {
+ 	efi_query_capsule_caps_t	*query_capsule_caps;
+ 	efi_get_next_high_mono_count_t	*get_next_high_mono_count;
+ 	efi_reset_system_t		*reset_system;
++	efi_custom_rt_service_t *custom_rt_service;
+ 
+ 	struct efi_memory_map		memmap;
+ 	unsigned long			flags;
+@@ -1207,6 +1210,7 @@ enum efi_rts_ids {
+ 	EFI_RESET_SYSTEM,
+ 	EFI_UPDATE_CAPSULE,
+ 	EFI_QUERY_CAPSULE_CAPS,
++    EFI_CUSTOM_RT_SERVICE,
+ };
+ 
+ /*
+-- 
+2.34.1
+

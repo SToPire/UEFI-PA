@@ -4,11 +4,12 @@
 EFI_STATUS
 EFIAPI
 CustomRTServiceEntry (
-  IN  EFI_CUSTOM_RT_INPUT  in,
+  IN  EFI_CUSTOM_RT_INPUT  *in,
   OUT EFI_CUSTOM_RT_OUTPUT *out
   )
 {
-  DEBUG ((DEBUG_INFO, "My GetTime\n"));
+  DEBUG ((DEBUG_INFO, "My CustomRTService, dummy=%u\n", in->DUMMY1));
+  out->DUMMY1 = 10086;
   return EFI_SUCCESS;
 }
 
