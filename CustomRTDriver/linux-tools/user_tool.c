@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "src/efi_custom_rt.h"
+#include "kmodule/efi_custom_rt.h"
 
 void _printPerfMonitorStats(struct efi_custom_rt_service_out *out)
 {
