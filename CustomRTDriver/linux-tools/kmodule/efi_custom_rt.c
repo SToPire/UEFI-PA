@@ -32,7 +32,9 @@ static long efi_custom_rt_entry(unsigned long arg)
 		return -EFAULT;
 	}
 
-	if (custom.out && put_user(out, custom.out)) {
+	if (custom.out &&
+	    copy_to_user(custom.out, &out,
+			 sizeof(struct efi_custom_rt_service_out))) {
 		return -EFAULT;
 	}
 

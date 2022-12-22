@@ -11,6 +11,10 @@
 #include <Library/UefiRuntimeLib.h>
 #include <Library/UefiRuntimeServicesTableLib.h>
 
+enum EFI_CUSTOM_RT_REQ_TYPE {
+  CUSTOM_RT_PERF_MONITOR,
+};
+
 EFI_STATUS
 EFIAPI
 InitializeCustimRTDriver (

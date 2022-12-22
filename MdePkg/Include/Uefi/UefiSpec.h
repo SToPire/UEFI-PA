@@ -1776,11 +1776,11 @@ EFI_STATUS
 
 /* Custom Runtime Service in UEFI PA */
 typedef struct {
-  UINT16 DUMMY1;
+  UINT8 TYPE;
 } EFI_CUSTOM_RT_INPUT;
 
 typedef struct {
-  UINT16 DUMMY1;
+  UINT64 PERF_MONITOR_RES[8];
 } EFI_CUSTOM_RT_OUTPUT;
 
 typedef
