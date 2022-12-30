@@ -37,4 +37,20 @@ edk2/CustomRTDriver.c
 
 6. Compile and run user program `user_tool`.
 
+#### Procedure of Development
+
+1. Build UEFI.
+    
+    Save your codes, run `make build` at *UEFI-PA/*. Run `[sudo] make qemu` in the same directory.
+2. Connect to VM.
+   
+   Connect to uefi vm with `ssh -p 10022 uefi@localhost`.
+3. Install the new module.
+   
+   Check out to module directory with `cd efi-runtime/src`, and run `make`.Install new kernel module with `sudo insmod efi_custom_rt.ko` at *efi-runtime/src*.
+4. Update user_tool.
+   
+   Modify **user_tool.c** in the **virtual machine**. After coding, run `gcc user_tools.c -o user_tool`.
+5. Run user_tool.
+
    

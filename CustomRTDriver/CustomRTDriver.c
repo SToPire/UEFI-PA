@@ -99,6 +99,12 @@ CustomRTServiceEntry (
           AsmReadMsr64(MSR_IA32_PMC0 + i) & ((1UL << PMCWidth) - 1);
     }
     break;
+  case CUSTOM_RT_SEC_REPORT:
+    UINT64 start = AsmReadMsr64(MSR_IA32_TIME_STAMP_COUNTER);
+    MicroSecondDelay(1000000);
+    UINT64 end = AsmReadMsr64(MSR_IA32_TIME_STAMP_COUNTER);
+    out->PERF_MONITOR_RES[0] = end - start;
+    break;
   default:
     DEBUG((DEBUG_INFO, "Unsupported service type=%u\n", in->TYPE));
     return EFI_UNSUPPORTED;

@@ -21,6 +21,7 @@
   UefiLib
   DebugLib
   BaseLib
+  TimerLib
 
 [Depex]
   TRUE  

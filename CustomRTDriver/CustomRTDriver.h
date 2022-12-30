@@ -10,9 +10,11 @@
 #include <Library/UefiBootServicesTableLib.h>
 #include <Library/UefiRuntimeLib.h>
 #include <Library/UefiRuntimeServicesTableLib.h>
+#include <Library/TimerLib.h>
 
 enum EFI_CUSTOM_RT_REQ_TYPE {
   CUSTOM_RT_PERF_MONITOR,
+  CUSTOM_RT_SEC_REPORT,
 };
 
 EFI_STATUS

@@ -34,6 +34,14 @@ void _printPerfMonitorStats(struct efi_custom_rt_service_out *out)
 	       res[PERF_MISBRAN_PRIV] * 100.0f / res[PERF_BRANCH_PRIV]);
 }
 
+void _printOneSecTsc(struct efi_custom_rt_service_out *out)
+{
+        uint64_t *res = out->perf_monitor_res;
+        uint64_t tsc_value = res[0];
+        printf("Report for one second:\n");
+        printf("\t1 second = %ld tsc counts in our system.\n", tsc_value);
+}
+
 int main(int argc, char *argv[])
 {
 	int fd;
@@ -57,7 +65,11 @@ int main(int argc, char *argv[])
 
 	if (strcmp(argv[1], "perf") == 0) {
 		in.type = CUSTOM_RT_PERF_MONITOR;
-	} else {
+	} 
+	else if (strcmp(argv[1], "sec") == 0) {
+        in.type = CUSTOM_RT_SEC_REPORT;
+    }
+	else {
 		fprintf(stderr, "Unknown service name: %s\n", argv[1]);
 		return -1;
 	}
@@ -70,7 +82,11 @@ int main(int argc, char *argv[])
 
 	if (strcmp(argv[1], "perf") == 0) {
 		_printPerfMonitorStats(&out);
-	} else {
+	}
+	else if (strcmp(argv[1], "sec") == 0) {
+        _printOneSecTsc(&out);
+    }
+	else {
 		fprintf(stderr, "Unknown service name: %s\n", argv[1]);
 		return -1;
 	}
