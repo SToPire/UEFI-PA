@@ -6,6 +6,7 @@
 enum efi_custom_rt_req_type {
     CUSTOM_RT_PERF_MONITOR,
     CUSTOM_RT_SEC_REPORT,
+    CUSTOM_RT_VMX_REPORT,
 };
 
 struct efi_custom_rt_service_in{

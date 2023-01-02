@@ -105,6 +105,12 @@ CustomRTServiceEntry (
     UINT64 end = AsmReadMsr64(MSR_IA32_TIME_STAMP_COUNTER);
     out->PERF_MONITOR_RES[0] = end - start;
     break;
+  case CUSTOM_RT_VMX_REPORT:
+    MSR_IA32_VMX_BASIC_REGISTER  msr;
+    msr.Uint64 = AsmReadMsr64(MSR_IA32_VMX_BASIC);
+    out->PERF_MONITOR_RES[0] = msr.Bits.VmcsSize;
+    out->PERF_MONITOR_RES[1] = msr.Bits.MemoryType;
+    break;
   default:
     DEBUG((DEBUG_INFO, "Unsupported service type=%u\n", in->TYPE));
     return EFI_UNSUPPORTED;
