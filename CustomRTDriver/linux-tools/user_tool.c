@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     struct efi_custom_rt_service arg;
 
     if (argc != 2) {
-        fprintf(stderr, "Usage: user_tool [perf]\n");
+        fprintf(stderr, "Usage: user_tool [perf | vmx | sec]\n");
         return -1;
     }
 
