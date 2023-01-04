@@ -3,7 +3,7 @@ We implement a UEFI custom runtime service driver with several dummy funcs.
 #### File Structure
 
 ```
-edk2/CustomRTDriver.c
+edk2/CustomRTDriver
 ├── CustomRTDriver.c
 ├── CustomRTDriver.h
 ├── CustomRTDriver.inf
@@ -46,10 +46,9 @@ edk2/CustomRTDriver.c
     Save your codes, run `make build` at *UEFI-PA/*. Run `[sudo] make qemu` in the same directory.
 2. Connect to VM.
    
-   Connect to uefi vm with `ssh -p 10022 uefi@localhost`.
 3. Install the new module.
    
-   Check out to module directory with `cd efi-runtime/src`, and run `make`.Install new kernel module with `sudo insmod efi_custom_rt.ko` at *efi-runtime/src*.
+   Copy `linux-tools` folder to your VM. Check out to module directory with `cd linux-tools/kmodule`, and run `make`. Install new kernel module with `sudo insmod efi_custom_rt.ko`.
 4. Update user_tool.
    
    Modify **user_tool.c** in the **virtual machine**. After coding, run `gcc user_tools.c -o user_tool`.
